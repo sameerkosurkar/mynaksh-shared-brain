@@ -1,0 +1,363 @@
+== Health
+{
+  "status": "ok",
+  "graph_backend": "neo4j",
+  "graph_available": true,
+  "llm_provider": "mock",
+  "llm_model": "mock-astro-v1",
+  "llm_chain": [
+    "mock"
+  ]
+}
+== Demo user: rahul-sample
+
+################ First conversation ################
+
+[session-1] USER: My name is Rahul. I was born on 15 August 1995 in Delhi. I'm planning to switch jobs next year.
+{
+  "response": "Namaste Rahul! I've noted: name: Rahul; date of birth: 1995-08-15; birth place: Delhi; goal: Career Change (timeframe next year, target year 2027). As a Leo (Fire sign, ruled by Sun), you tend to do best with visibility, leadership and owning outcomes. Ask me what to focus on whenever you're ready.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:name",
+      "title": "name",
+      "detail": "Rahul"
+    },
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:date_of_birth",
+      "title": "date_of_birth",
+      "detail": "1995-08-15"
+    },
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:birth_place",
+      "title": "birth_place",
+      "detail": "Delhi"
+    },
+    {
+      "action": "created",
+      "kind": "astrology",
+      "key": "zodiac",
+      "title": "sun_sign",
+      "detail": "Leo"
+    },
+    {
+      "action": "created",
+      "kind": "goal",
+      "key": "goal:career_change",
+      "title": "Career Change",
+      "detail": "Career Change (timeframe: next year, target year: 2027)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "mock",
+  "degraded": false,
+  "warnings": [
+    "new_user"
+  ]
+}
+
+[session-1] USER: What should I focus on for my career?
+{
+  "response": "Namaste Rahul! Based on what you've shared (Career Change (timeframe: next year, target year: 2027)), for career, focus on: build one visible proof of skill, have conversations with people already in the roles you want, and set a clear timeline for your move. As a Leo (Fire sign, ruled by Sun), you tend to do best with visibility, leadership and owning outcomes.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "advice",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "mock",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-1] USER: Why do you say that?
+{
+  "response": "I said \"Namaste Rahul! Based on what you've shared (Career Change (timeframe: next year, target year: 2027)), for career, focus on: build one visible proof of skill,...\" because you told me about: Career Change (timeframe: next year, target year: 2027) Also, as a Leo (Fire sign, ruled by Sun), you tend to do best with visibility, leadership and owning outcomes.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "followup",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "mock",
+  "degraded": false,
+  "warnings": []
+}
+
+################ New conversation ################
+
+[session-2] USER: What do you remember about my career goals?
+{
+  "response": "Here's what I remember about your career:\n- Career Change (timeframe: next year, target year: 2027)",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "previous_session_summary"
+  ],
+  "intent": "recall",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "mock",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: I'm preparing for a product management interview next month.
+{
+  "response": "Namaste Rahul! I've noted: goal: Product Management Interview (timeframe next month, target month 2026-11). As a Leo (Fire sign, ruled by Sun), you tend to do best with visibility, leadership and owning outcomes. Ask me what to focus on whenever you're ready.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "created",
+      "kind": "goal",
+      "key": "goal:product_management_interview",
+      "title": "Product Management Interview",
+      "detail": "Product Management Interview (timeframe: next month, target month: 2026-11)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "mock",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: How is my health looking this year?
+{
+  "response": "Namaste Rahul! Here's my guidance: for health, focus on: keep a steady routine for sleep and movement, and consult a professional for anything persistent. As a Leo (Fire sign, ruled by Sun), you are naturally confident, creative and proud; use that, but watch for being too proud.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "conversation_history"
+  ],
+  "intent": "advice",
+  "life_areas": [
+    "health"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "mock",
+  "degraded": false,
+  "warnings": [
+    "no_relevant_memory"
+  ]
+}
+
+[session-2] USER: Actually, I plan to switch jobs in 2028, not next year.
+{
+  "response": "Namaste Rahul! I've noted: goal: Career Change (timeframe 2028, target year 2028). As a Leo (Fire sign, ruled by Sun), you tend to do best with visibility, leadership and owning outcomes. Ask me what to focus on whenever you're ready.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "updated",
+      "kind": "goal",
+      "key": "goal:career_change",
+      "title": "Career Change",
+      "detail": "Career Change (timeframe: next year, target year: 2027) -> Career Change (timeframe: 2028, target year: 2028)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "mock",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: Thanks!
+{
+  "response": "Namaste Rahul! I'm Naksh, your astrology guide. Ask me about your career, relationships, health or anything on your mind.",
+  "context_used": [
+    "user_profile",
+    "conversation_history",
+    "conversation_summary"
+  ],
+  "intent": "smalltalk",
+  "life_areas": [],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "mock",
+  "degraded": false,
+  "warnings": []
+}
+
+################ Shared Brain for rahul-sample ################
+{
+  "user": {
+    "updated_at": "2026-10-03T13:01:04+00:00",
+    "user_id": "rahul-sample",
+    "date_of_birth": "1995-08-15",
+    "name": "Rahul",
+    "birth_place": "Delhi",
+    "created_at": "2026-10-03T13:01:04+00:00",
+    "sun_sign": "Leo"
+  },
+  "relationships": [
+    {
+      "type": "HAS_ZODIAC",
+      "target": {
+        "label": "ZodiacSign",
+        "name": "Leo"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "7c65a6e374ef4bf1aaf9b395918224ef",
+        "kind": "goal",
+        "key": "goal:career_change",
+        "title": "Career Change",
+        "area": "career",
+        "confidence": 0.9,
+        "importance": 0.9,
+        "status": "active",
+        "source_text": "Actually, I plan to switch jobs in 2028, not next year.",
+        "mention_count": 2,
+        "created_at": "2026-10-03T13:01:04+00:00",
+        "updated_at": "2026-10-03T13:01:04+00:00",
+        "attr_timeframe": "2028",
+        "attr_target_year": 2028
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "2836dfdfe0364a23a45f664faf68d197",
+        "kind": "goal",
+        "key": "goal:product_management_interview",
+        "title": "Product Management Interview",
+        "area": "career",
+        "confidence": 0.85,
+        "importance": 0.9,
+        "status": "active",
+        "source_text": "I'm preparing for a product management interview next month.",
+        "mention_count": 1,
+        "created_at": "2026-10-03T13:01:04+00:00",
+        "updated_at": "2026-10-03T13:01:04+00:00",
+        "attr_timeframe": "next month",
+        "attr_target_month": "2026-11"
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "84a00310bf26413f8bc57e5db3687416",
+        "kind": "goal",
+        "key": "goal:career_change",
+        "title": "Career Change",
+        "area": "career",
+        "confidence": 0.85,
+        "importance": 0.9,
+        "status": "superseded",
+        "source_text": "I'm planning to switch jobs next year.",
+        "mention_count": 1,
+        "created_at": "2026-10-03T13:01:04+00:00",
+        "updated_at": "2026-10-03T13:01:04+00:00",
+        "attr_timeframe": "next year",
+        "attr_target_year": 2027
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    }
+  ],
+  "supersedes": [
+    {
+      "new_id": "7c65a6e374ef4bf1aaf9b395918224ef",
+      "old_id": "84a00310bf26413f8bc57e5db3687416"
+    }
+  ],
+  "profile_history": [],
+  "sessions": [
+    {
+      "key": null,
+      "summary": "User: What do you remember about my career goals? Naksh: Here's what I remember about your career: - Career Change (timeframe: next year, target year: 2027) User: I'm preparing for a product management interview next month. Naksh: Namaste Rahul! I've noted: goal: Product Management Interview (timeframe next month, target month 2026-11). As a Leo (Fire sign, ruled by... How is my health looking this year? | Actually, I plan to switch jobs in 2028, not next year. | Thanks!",
+      "user_id": "rahul-sample",
+      "session_id": "session-2",
+      "started_at": "2026-10-03T13:01:04+00:00",
+      "last_active": "2026-10-03T13:01:04+00:00",
+      "turns": 10
+    },
+    {
+      "key": null,
+      "summary": "My name is Rahul. I was born on 15 August 1995 in Delhi. I'm planning to switch jobs next year. | What should I focus on for my career? | Why do you say that?",
+      "user_id": "rahul-sample",
+      "session_id": "session-1",
+      "started_at": "2026-10-03T13:01:04+00:00",
+      "last_active": "2026-10-03T13:01:04+00:00",
+      "turns": 6
+    }
+  ]
+}

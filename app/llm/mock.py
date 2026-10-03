@@ -48,8 +48,11 @@ class MockProvider(LLMProvider):
         astro = md.get("astro") or {}
         if not astro.get("sun_sign"):
             return ""
-        return (f"As a {astro['sun_sign']} ({astro.get('element')} sign, ruled by {astro.get('ruling_planet')}), "
-                f"you tend to do best with {astro.get('career_hint')}.")
+        lead = f"As a {astro['sun_sign']} ({astro.get('element')} sign, ruled by {astro.get('ruling_planet')}), "
+        if (md.get("areas") or ["career"])[0] == "career":
+            return lead + f"you tend to do best with {astro.get('career_hint')}."
+        traits = list(astro.get("traits") or [])
+        return lead + f"you are naturally {', '.join(traits[:-1])} and {traits[-1]}; use that, but watch for being too {traits[-1]}."
 
     @staticmethod
     def _missing_line(md: dict) -> str:

@@ -17,8 +17,9 @@ print(json.dumps({k:d[k] for k in keys if k in d} if "response" in d else d, ind
   fi
 }
 
+if [ -t 1 ]; then C='\033[1;36m'; R='\033[0m'; else C=''; R=''; fi
 say() {  # session, message
-  printf '\n\033[1;36m[%s] USER:\033[0m %s\n' "$1" "$2"
+  printf "\n${C}[%s] USER:${R} %s\n" "$1" "$2"
   curl -sS -X POST "$BASE_URL/chat" -H 'Content-Type: application/json' \
     -d "$(printf '{"user_id":"%s","session_id":"%s","message":"%s"}' "$USER_ID" "$1" "$2")" | pretty
 }
