@@ -9,7 +9,7 @@ Graph model
   -[:PREFERS]->           (:Memory:Preference {...})
   -[:EXPERIENCED]->       (:Memory:LifeEvent  {...})
   -[:CONCERNED_ABOUT]->   (:Memory:Concern    {...})
-  -[:HAD_SESSION]->       (:Session {session_id, summary, turns, started_at, last_active})
+  -[:HAD_SESSION]->       (:Session {key: user_id/session_id, session_id, summary, turns, started_at, last_active})
   -[:HAD_PROFILE_VALUE]-> (:ProfileHistory {field, old_value, new_value, changed_at})
 (:Memory)-[:ABOUT]->(:LifeArea {name})
 (:Memory)-[:SUPERSEDES]->(:Memory)     # correction history; old node keeps status='superseded'
@@ -35,7 +35,8 @@ _SCHEMA = [
     "CREATE CONSTRAINT memory_id IF NOT EXISTS FOR (m:Memory) REQUIRE m.id IS UNIQUE",
     "CREATE CONSTRAINT life_area IF NOT EXISTS FOR (a:LifeArea) REQUIRE a.name IS UNIQUE",
     "CREATE CONSTRAINT zodiac IF NOT EXISTS FOR (z:ZodiacSign) REQUIRE z.name IS UNIQUE",
-    "CREATE CONSTRAINT session_id IF NOT EXISTS FOR (s:Session) REQUIRE s.session_id IS UNIQUE",
+    # session ids are client supplied, so they are only unique per user
+    "CREATE CONSTRAINT session_key IF NOT EXISTS FOR (s:Session) REQUIRE s.key IS UNIQUE",
     "CREATE INDEX memory_key IF NOT EXISTS FOR (m:Memory) ON (m.key, m.status)",
 ]
 
@@ -134,7 +135,8 @@ class Neo4jGraphStore:
         now = utcnow_iso()
         self._run(
             "MATCH (u:User {user_id: $uid}) "
-            "MERGE (s:Session {session_id: $sid}) ON CREATE SET s.started_at = $now, s.user_id = $uid "
+            "MERGE (s:Session {key: $uid + '/' + $sid}) "
+            "ON CREATE SET s.started_at = $now, s.user_id = $uid, s.session_id = $sid "
             "SET s.summary = $summary, s.turns = $turns, s.last_active = $now "
             "MERGE (u)-[:HAD_SESSION]->(s)",
             uid=user_id, sid=session_id, summary=summary, turns=turns, now=now)
@@ -143,7 +145,7 @@ class Neo4jGraphStore:
         rows = self._run(
             "MATCH (:User {user_id: $uid})-[:HAD_SESSION]->(s:Session) "
             "WHERE $exclude IS NULL OR s.session_id <> $exclude "
-            "RETURN s{.*} AS s ORDER BY s.last_active DESC LIMIT $limit",
+            "RETURN s{.*, key: null} AS s ORDER BY s.last_active DESC LIMIT $limit",
             read=True, uid=user_id, exclude=exclude_session_id, limit=limit)
         return [r["s"] for r in rows]
 
