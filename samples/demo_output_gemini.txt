@@ -1,0 +1,364 @@
+== Health
+{
+  "status": "ok",
+  "graph_backend": "neo4j",
+  "graph_available": true,
+  "llm_provider": "gemini",
+  "llm_model": "gemini-3.5-flash-lite",
+  "llm_chain": [
+    "gemini",
+    "mock"
+  ]
+}
+== Demo user: rahul
+
+################ First conversation ################
+
+[session-1] USER: My name is Rahul. I was born on 15 August 1995 in Delhi. I'm planning to switch jobs next year.
+{
+  "response": "Hello Rahul. As a Leo, your natural confidence and creativity are wonderful assets for a career transition, especially as you look toward making that big shift in 2027. \n\nTo give you more tailored astrological insights for your career change, could you share your exact time of birth? \n\nPlease remember that astrology offers guidance rather than absolute certainties, and for major financial or career decisions, it's always wise to consult a qualified professional.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:name",
+      "title": "name",
+      "detail": "Rahul"
+    },
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:date_of_birth",
+      "title": "date_of_birth",
+      "detail": "1995-08-15"
+    },
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:birth_place",
+      "title": "birth_place",
+      "detail": "Delhi"
+    },
+    {
+      "action": "created",
+      "kind": "astrology",
+      "key": "zodiac",
+      "title": "sun_sign",
+      "detail": "Leo"
+    },
+    {
+      "action": "created",
+      "kind": "goal",
+      "key": "goal:career_change",
+      "title": "Career Change",
+      "detail": "Career Change (timeframe: next year, target year: 2027)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "gemini",
+  "degraded": false,
+  "warnings": [
+    "new_user"
+  ]
+}
+
+[session-1] USER: What should I focus on for my career?
+{
+  "response": "Hello Rahul. With your Leo Sun, you thrive best in environments where you can lead, express your creativity, and make a distinct impact. As you prepare for your career change in 2027, focus on roles that allow you to take ownership and showcase your unique talents rather than feeling boxed into a routine. \n\nTo pinpoint which specific sectors or paths might align best with your chart for this transition, I just need to know your exact time of birth, if you have it.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "advice",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "gemini",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-1] USER: Why do you say that?
+{
+  "response": "I say that because your Sun sign is Leo. In astrology, your Sun sign represents your core identity, vitality, and natural inclinations. Ruled by the Sun, Leos are traditionally associated with leadership, creativity, confidence, and a desire to make a meaningful impact, which naturally shapes how you approach your work and career goals.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "followup",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "gemini",
+  "degraded": false,
+  "warnings": []
+}
+
+################ New conversation ################
+
+[session-2] USER: What do you remember about my career goals?
+{
+  "response": "Hello Rahul. Here is what I currently have stored about your career goals:\n\n- You are planning a career change next year, with a target year of 2027. \n\nAs a Leo, your natural confidence and creative drive will be great assets as you work toward this transition.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "previous_session_summary"
+  ],
+  "intent": "recall",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "gemini",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: I'm preparing for a product management interview next month.
+{
+  "response": "That is an exciting step, Rahul! Preparing for a Product Management interview next month (November 2026) aligns wonderfully with your broader path toward your 2027 career change. \n\nAs a Leo, your natural leadership, vision, and ability to inspire others are huge assets in product management. To tailor this guidance further, what is your exact time of birth? \n\n*Please remember that astrology offers guidance, and important career decisions involve your own efforts and professional judgment.*",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "created",
+      "kind": "goal",
+      "key": "goal:product_management_interview",
+      "title": "Product Management Interview",
+      "detail": "Product Management Interview (timeframe: next month, target month: 2026-11)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "gemini",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: How is my health looking this year?
+{
+  "response": "For a general look at your health this year, Rahul, your Leo vitality is a strong anchor. However, preparing for a high-stakes interview next month can bring extra stress. Make sure to balance your ambitious drive with restorative rest so you don't burn out your inner fire. \n\n*(Please note that astrology offers guidance, and you should always consult a medical professional for health concerns.)*",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "conversation_history"
+  ],
+  "intent": "advice",
+  "life_areas": [
+    "health"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "gemini",
+  "degraded": false,
+  "warnings": [
+    "no_relevant_memory"
+  ]
+}
+
+[session-2] USER: Actually, I plan to switch jobs in 2028, not next year.
+{
+  "response": "Got it, Rahul—I've updated that for you. A 2028 target gives you a solid, spacious runway to build up your experience, starting with your Product Management interview next month! \n\nWith your Leo Sun, channeling that fiery drive and steady preparation will serve you well as you pace yourself toward 2028.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "updated",
+      "kind": "goal",
+      "key": "goal:career_change",
+      "title": "Career Change",
+      "detail": "Career Change (timeframe: next year, target year: 2027) -> Career Change (timeframe: 2028, target year: 2028)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "gemini",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: Thanks!
+{
+  "response": "You're very welcome, Rahul! Best of luck with your Product Management interview preparations next month—trust in your Leo strengths, and take it one step at a time. I'm here whenever you need a sounding board!",
+  "context_used": [
+    "user_profile",
+    "conversation_history",
+    "conversation_summary"
+  ],
+  "intent": "smalltalk",
+  "life_areas": [],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "gemini",
+  "degraded": false,
+  "warnings": []
+}
+
+################ Shared Brain for rahul ################
+{
+  "user": {
+    "updated_at": "2026-10-04T10:56:00+00:00",
+    "user_id": "rahul",
+    "date_of_birth": "1995-08-15",
+    "name": "Rahul",
+    "birth_place": "Delhi",
+    "created_at": "2026-10-04T10:55:58+00:00",
+    "sun_sign": "Leo"
+  },
+  "relationships": [
+    {
+      "type": "HAS_ZODIAC",
+      "target": {
+        "label": "ZodiacSign",
+        "name": "Leo"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "4c44fce0c2334452b458f97feeb51ef7",
+        "kind": "goal",
+        "key": "goal:career_change",
+        "title": "Career Change",
+        "area": "career",
+        "confidence": 0.85,
+        "importance": 0.9,
+        "status": "superseded",
+        "source_text": "I'm planning to switch jobs next year.",
+        "mention_count": 1,
+        "created_at": "2026-10-04T10:56:01+00:00",
+        "updated_at": "2026-10-04T10:56:13+00:00",
+        "attr_timeframe": "next year",
+        "attr_target_year": 2027
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "3ee2eadaaa3d46068dda7c40d3dcf02b",
+        "kind": "goal",
+        "key": "goal:product_management_interview",
+        "title": "Product Management Interview",
+        "area": "career",
+        "confidence": 0.85,
+        "importance": 0.9,
+        "status": "active",
+        "source_text": "I'm preparing for a product management interview next month.",
+        "mention_count": 1,
+        "created_at": "2026-10-04T10:56:09+00:00",
+        "updated_at": "2026-10-04T10:56:09+00:00",
+        "attr_timeframe": "next month",
+        "attr_target_month": "2026-11"
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "86b1527e77f9411699814ea5ae924d18",
+        "kind": "goal",
+        "key": "goal:career_change",
+        "title": "Career Change",
+        "area": "career",
+        "confidence": 0.9,
+        "importance": 0.9,
+        "status": "active",
+        "source_text": "Actually, I plan to switch jobs in 2028, not next year.",
+        "mention_count": 2,
+        "created_at": "2026-10-04T10:56:13+00:00",
+        "updated_at": "2026-10-04T10:56:13+00:00",
+        "attr_timeframe": "2028",
+        "attr_target_year": 2028
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    }
+  ],
+  "supersedes": [
+    {
+      "new_id": "86b1527e77f9411699814ea5ae924d18",
+      "old_id": "4c44fce0c2334452b458f97feeb51ef7"
+    }
+  ],
+  "profile_history": [],
+  "sessions": [
+    {
+      "key": null,
+      "summary": "User: What do you remember about my career goals? Naksh: Hello Rahul. Here is what I currently have stored about your career goals:  - You are planning a career change next year, with a target y... User: I'm preparing for a product management interview next month. Naksh: That is an exciting step, Rahul! Preparing for a Product Management interview next month (November 2026) aligns wonderfully with your bro... How is my health looking this year? | Actually, I plan to switch jobs in 2028, not next year. | Thanks!",
+      "user_id": "rahul",
+      "session_id": "session-2",
+      "started_at": "2026-10-04T10:56:05+00:00",
+      "last_active": "2026-10-04T10:56:15+00:00",
+      "turns": 10
+    },
+    {
+      "key": null,
+      "summary": "My name is Rahul. I was born on 15 August 1995 in Delhi. I'm planning to switch jobs next year. | What should I focus on for my career? | Why do you say that?",
+      "user_id": "rahul",
+      "session_id": "session-1",
+      "started_at": "2026-10-04T10:56:01+00:00",
+      "last_active": "2026-10-04T10:56:04+00:00",
+      "turns": 6
+    }
+  ]
+}

@@ -66,11 +66,10 @@ class ContextSelector:
         profile = profile or {}
         ctx = SelectedContext(missing_fields=missing_profile_fields(profile))
 
-        # --- profile / astrology (compact; birth details only when astrology is asked about) ---
-        ctx.profile = {k: profile[k] for k in ("name", "preferred_language") if profile.get(k)}
-        if analysis.wants_astrology:
-            ctx.profile.update({k: profile[k] for k in ("date_of_birth", "time_of_birth", "birth_place")
-                                if profile.get(k)})
+        # --- profile / astrology (a handful of tokens; always sent when known, because hiding birth
+        # details made the model ask the user for data we already had) ---
+        ctx.profile = {k: profile[k] for k in ("name", "preferred_language", "date_of_birth", "time_of_birth",
+                                               "birth_place") if profile.get(k)}
         if analysis.intent != "smalltalk":
             astro = astro_profile(profile)
             if astro.get("sun_sign"):

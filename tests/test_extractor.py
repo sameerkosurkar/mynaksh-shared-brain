@@ -86,7 +86,8 @@ def test_pii_is_redacted_before_storage():
 def test_llm_extractor_output_is_validated_and_canonicalised():
     raw = ('{"memories": [{"kind": "goal", "title": "Switch jobs", "area": "career", "target_year": 2027,'
            ' "confidence": 0.95, "importance": 0.9}, {"kind": "bogus", "title": "x", "area": "career"},'
-           ' {"kind": "interest", "title": "Chess", "area": "not-an-area"}]}')
+           ' {"kind": "interest", "title": "Chess", "area": "not-an-area"},'
+           ' {"kind": "life_event", "title": "Birth date and place", "area": "personal"}]}')
     out = LLMExtractor._parse(raw, "msg")
     assert [c.key for c in out] == ["goal:career_change"]
     assert out[0].confidence <= 0.8          # LLM-only facts are capped below rule confidence

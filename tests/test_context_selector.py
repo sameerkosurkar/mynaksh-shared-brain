@@ -40,11 +40,10 @@ def test_smalltalk_sends_no_memories():
     assert a.intent == "smalltalk" and ctx.items == [] and ctx.astro == {}
 
 
-def test_birth_details_only_for_astrology_questions():
-    _, ctx = select("How will my career go?")
-    assert "date_of_birth" not in ctx.profile
-    _, ctx = select("What does my kundli say about my career?")
-    assert ctx.profile["date_of_birth"] == "1995-08-15"
+def test_known_birth_details_are_always_sent():
+    _, ctx = select("How is my health this year?")
+    assert ctx.profile["date_of_birth"] == "1995-08-15" and ctx.profile["birth_place"] == "Delhi"
+    assert ctx.missing_fields == ["time_of_birth"]
 
 
 def test_followup_reuses_previous_answer_context():
@@ -78,3 +77,4 @@ def test_short_term_window_rolls_into_summary():
     assert [t.content for t in s.turns] == ["message 2", "message 3"]
     assert "message 0" in s.summary and "message 1" in s.summary
     assert stm.get("other-user", "s").turns == type(s.turns)()   # sessions are isolated per user
+

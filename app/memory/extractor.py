@@ -468,11 +468,16 @@ class RuleExtractor:
 EXTRACTION_SYSTEM_PROMPT = f"""You extract long-term memories about a user from ONE chat message for a personal
 astrology assistant. Only extract durable facts ABOUT THE USER that will help future conversations:
 goals/plans (with timeframe), interests, preferences, important life events, ongoing concerns.
-Do NOT extract: questions, greetings, small talk, hypotheticals, facts about other people, temporary
+Do NOT extract profile facts (name, date/time/place of birth, language, zodiac) - they are handled
+separately. Do NOT extract: questions, greetings, small talk, hypotheticals, facts about other people, temporary
 states (tired, hungry), or any IDs, phone numbers, emails or financial account details.
 Return JSON: {{"memories": [{{"kind": one of {list(KINDS)}, "title": "2-5 word title",
 "area": one of {list(LIFE_AREAS)}, "timeframe": "optional", "target_year": optional int,
 "confidence": 0-1, "importance": 0-1}}]}}. Return {{"memories": []}} if nothing qualifies."""
+
+
+# Profile data is owned by the rule extractor; the LLM sometimes re-emits it as a "life event".
+_PROFILE_LIKE = re.compile(r"\b(birth|born|birthday|name|language|zodiac|sun sign)\b", re.I)
 
 
 class LLMExtractor:
@@ -500,7 +505,7 @@ class LLMExtractor:
         out = []
         for m in (data.get("memories") or [])[:5]:
             kind, title, area = m.get("kind"), str(m.get("title") or "").strip(), m.get("area")
-            if kind not in KINDS or not title or area not in LIFE_AREAS:
+            if kind not in KINDS or not title or area not in LIFE_AREAS or _PROFILE_LIKE.search(title):
                 continue
             try:
                 conf = float(m.get("confidence", 0.6))

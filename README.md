@@ -249,7 +249,7 @@ The goal is to send the LLM **only what helps answer this message**, never the w
 | `share_info` ("My name is…") | memories in the mentioned area + the new facts being saved | recent turns |
 
 Other rules:
-* **Birth details** (DOB, time, place) are included only when the question is about astrology (kundli, chart, sign …). The sun sign and its traits are included for advice.
+* **Profile** (name, language, birth details) is always included when known. It is only a few tokens, and an earlier version that hid birth details for non-astrology questions made the real LLM ask users for a date of birth it already had. The sun sign and its traits are included for every non-smalltalk intent.
 * **Token budget** (`MAX_CONTEXT_TOKENS`, default 1200): the oldest turns are dropped first, then the lowest-scored memories.
 * **Missing data** goes into the prompt as "Not yet known: …". The model is told to ask for it rather than guess, and the response lists `missing_profile_fields`.
 
@@ -361,6 +361,6 @@ conversation summarisation (rolling plus per-session `Session.summary`) · model
 preferred-language responses (Hindi etc.) · graph traversal via `LifeArea`.
 
 ## Sample requests & responses
-See [`samples/requests.md`](samples/requests.md) for curl requests with responses, and
-[`samples/demo_output.txt`](samples/demo_output.txt) for the full captured output of `scripts/demo.sh`
-against the Docker stack (Neo4j + mock LLM).
+* [`samples/requests.md`](samples/requests.md): curl requests with full responses, captured with **Gemini** (`gemini-3.5-flash-lite`) + Neo4j.
+* [`samples/demo_output_gemini.txt`](samples/demo_output_gemini.txt): the full `scripts/demo.sh` run with Gemini.
+* [`samples/demo_output.txt`](samples/demo_output.txt): the same run with the offline mock LLM.

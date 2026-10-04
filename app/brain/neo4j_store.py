@@ -44,7 +44,9 @@ _SCHEMA = [
 class Neo4jGraphStore:
     def __init__(self, uri: str, user: str, password: str, database: str = "neo4j"):
         self.driver = GraphDatabase.driver(uri, auth=(user, password), connection_timeout=5.0,
-                                           max_connection_lifetime=300)
+                                           max_connection_lifetime=300,
+                                           # "label does not exist yet" notices on an empty DB are noise
+                                           notifications_min_severity="OFF")
         self.database = database
         self._schema_ready = False
 
