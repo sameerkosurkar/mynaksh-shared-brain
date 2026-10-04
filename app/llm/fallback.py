@@ -20,11 +20,12 @@ class LLMResult:
 
 
 class FallbackLLM:
-    def __init__(self, providers: list[LLMProvider], max_retries: int = 1):
+    def __init__(self, providers: list[LLMProvider], max_retries: int = 1, max_wait: float = 8.0):
         if not providers:
             raise ValueError("at least one provider required")
         self.providers = providers
         self.max_retries = max_retries
+        self.max_wait = max_wait
 
     @property
     def primary(self) -> LLMProvider:
@@ -44,9 +45,11 @@ class FallbackLLM:
                 except LLMError as exc:
                     errors.append(f"{provider.name}: {exc}")
                     log.warning("LLM %s attempt %d failed: %s", provider.name, attempt + 1, exc)
-                    if not exc.retryable:
+                    if not exc.retryable or attempt == self.max_retries:
                         break
-                    time.sleep(min(0.5 * (2 ** attempt), 2.0))
+                    # Honour the provider's Retry-After (e.g. per-minute token limits), but cap the wait
+                    # so a user is never kept waiting long; after that we fall back to the next provider.
+                    time.sleep(min(exc.retry_after if exc.retry_after else 0.5 * (2 ** attempt), self.max_wait))
                 except Exception as exc:  # noqa: BLE001 - never let a provider bug escape
                     errors.append(f"{provider.name}: {exc!r}")
                     log.exception("LLM %s crashed", provider.name)

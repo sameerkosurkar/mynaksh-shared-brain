@@ -33,9 +33,10 @@ class LLMResponse:
 
 
 class LLMError(Exception):
-    def __init__(self, message: str, retryable: bool = True):
+    def __init__(self, message: str, retryable: bool = True, retry_after: float | None = None):
         super().__init__(message)
         self.retryable = retryable
+        self.retry_after = retry_after      # seconds, when the provider says how long to back off
 
 
 class LLMProvider(ABC):

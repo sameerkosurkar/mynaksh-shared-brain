@@ -2,9 +2,11 @@
 # Walks through the assignment's example conversation against a running API.
 # Usage: ./scripts/demo.sh            (BASE_URL defaults to http://localhost:8000)
 #        USER_ID=rahul ./scripts/demo.sh
+#        DELAY=10 ./scripts/demo.sh   (pause between messages, for free-tier per-minute token limits)
 set -euo pipefail
 BASE_URL="${BASE_URL:-http://localhost:8000}"
 USER_ID="${USER_ID:-rahul-$(date +%s)}"
+DELAY="${DELAY:-0}"
 
 pretty() {
   if command -v python3 >/dev/null 2>&1; then
@@ -22,6 +24,7 @@ say() {  # session, message
   printf "\n${C}[%s] USER:${R} %s\n" "$1" "$2"
   curl -sS -X POST "$BASE_URL/chat" -H 'Content-Type: application/json' \
     -d "$(printf '{"user_id":"%s","session_id":"%s","message":"%s"}' "$USER_ID" "$1" "$2")" | pretty
+  sleep "$DELAY"
 }
 
 echo "== Health"; curl -sS "$BASE_URL/health" | pretty

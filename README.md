@@ -34,6 +34,9 @@ Then, in another terminal, run the assignment's example conversation from start 
 ./scripts/demo.sh             # prints each reply, context_used and memory_updates, then the user's graph
 ```
 
+> On a free-tier key with a per-minute token limit (e.g. Groq: 8,000 tokens/min), use `DELAY=12 ./scripts/demo.sh`.
+> Without it, some replies may come from the fallback mock (they are marked `"degraded": true`).
+>
 > Port 8000 already in use? Run `APP_PORT=8001 docker compose up --build` and `BASE_URL=http://localhost:8001 ./scripts/demo.sh`.
 
 ### Configure an LLM
@@ -44,6 +47,7 @@ Edit `.env` and set **one** provider. No key is committed to this repo; use your
 | Google Gemini (free tier) | https://aistudio.google.com/apikey | `LLM_PROVIDER=gemini`<br>`GEMINI_API_KEY=...` |
 | OpenAI | https://platform.openai.com/api-keys | `LLM_PROVIDER=openai`<br>`OPENAI_API_KEY=...` |
 | Anthropic | https://console.anthropic.com/settings/keys | `LLM_PROVIDER=anthropic`<br>`ANTHROPIC_API_KEY=...` |
+| Groq (free tier, OpenAI-compatible) | https://console.groq.com/keys | `LLM_PROVIDER=openai`<br>`OPENAI_API_KEY=gsk_...`<br>`OPENAI_BASE_URL=https://api.groq.com/openai/v1`<br>`OPENAI_MODEL=openai/gpt-oss-120b` |
 | None | – | `LLM_PROVIDER=mock` (default) |
 
 After changing `.env`, restart with `docker compose up -d --force-recreate app`. Then check
@@ -260,7 +264,8 @@ Other rules:
 `LLMProvider.generate(LLMRequest) -> LLMResponse` is the only interface the app depends on.
 `GeminiProvider`, `OpenAIProvider` (any OpenAI-compatible server through `OPENAI_BASE_URL`, e.g. Ollama or vLLM),
 `AnthropicProvider` and `MockProvider` each use plain `httpx` (no vendor SDKs), about 30 lines per provider.
-`FallbackLLM` retries retryable errors (timeouts, 429, 5xx) with backoff, then falls back to the next provider.
+`FallbackLLM` retries retryable errors (timeouts, 429, 5xx), honouring the provider's `Retry-After` (capped at 8 s),
+then falls back to the next provider.
 Switching provider is a one-line `.env` change.
 
 The prompt contains: system rules (no invented facts, astrology framed as guidance, explain reasoning on
@@ -363,4 +368,11 @@ preferred-language responses (Hindi etc.) · graph traversal via `LifeArea`.
 ## Sample requests & responses
 * [`samples/requests.md`](samples/requests.md): curl requests with full responses, captured with **Gemini** (`gemini-3.5-flash-lite`) + Neo4j.
 * [`samples/demo_output_gemini.txt`](samples/demo_output_gemini.txt): the full `scripts/demo.sh` run with Gemini.
+* [`samples/demo_output_groq.txt`](samples/demo_output_groq.txt): the same run with **Groq** (`openai/gpt-oss-120b`), via the OpenAI-compatible adapter.
 * [`samples/demo_output.txt`](samples/demo_output.txt): the same run with the offline mock LLM.
+
+### Lessons from testing with real LLMs
+* **Gemini:** hiding known birth details for non-astrology questions made the model ask for a date of birth it already had. Known profile fields are now always sent, and the model is told to ask only for fields listed as missing.
+* **Gemini:** the LLM extractor re-emitted profile data as a "life event". Profile-like titles are now dropped from LLM extraction, because the rules own profile data.
+* **Groq / gpt-oss:** the model invented specific, mutually contradictory planetary transits. The prompt now states that no ephemeris data is provided and forbids stating planet positions.
+* **Groq free tier:** per-minute token limits caused HTTP 429s. Retries now honour `Retry-After`, and the mock fallback keeps the conversation going (visible as `degraded: true`).

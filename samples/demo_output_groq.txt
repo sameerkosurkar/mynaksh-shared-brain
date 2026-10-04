@@ -1,0 +1,364 @@
+== Health
+{
+  "status": "ok",
+  "graph_backend": "neo4j",
+  "graph_available": true,
+  "llm_provider": "openai",
+  "llm_model": "openai/gpt-oss-120b",
+  "llm_chain": [
+    "openai",
+    "mock"
+  ]
+}
+== Demo user: rahul
+
+################ First conversation ################
+
+[session-1] USER: My name is Rahul. I was born on 15 August 1995 in Delhi. I'm planning to switch jobs next year.
+{
+  "response": "Hi Rahul! As a Leo, your fire‑element energy thrives on visibility, creativity, and leadership. When you aim to change jobs in 2027, lean into those strengths:\n\n1. **Showcase your “star” quality** – update your LinkedIn and résumé with bold, colorful design and clear achievements. Highlight any projects where you led a team or sparked a new idea; Leo’s confidence shines when it’s documented.\n\n2. **Network in bright‑spot settings** – attend industry conferences, workshops, or webinars that put you on stage (panels, presentations). Your natural charisma draws attention, making referrals easier.\n\n3. **Timing tip** – the Sun rules Leo, so the months when the Sun is strongest in your sign (late July‑early August) often feel energised. Planning key applications or interviews around that period can boost confidence.\n\n4. **Creative “roar”** – consider roles that let you innovate (marketing, product design, brand strategy) or manage people. Your pride in doing work you love will keep motivation high during the transition.\n\n5. **Self‑care** – fire signs can burn out if they don’t pause. Schedule short breaks for hobbies that light you up (music, sports, art) to keep the inner flame steady.\n\nAstrology offers guidance; for detailed timing or legal/financial specifics, a professional astrologer or career counselor can add precision. Good luck—2027 looks ready for your next big spotlight!",
+  "context_used": [
+    "user_profile",
+    "astrology_profile"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:name",
+      "title": "name",
+      "detail": "Rahul"
+    },
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:date_of_birth",
+      "title": "date_of_birth",
+      "detail": "1995-08-15"
+    },
+    {
+      "action": "created",
+      "kind": "profile",
+      "key": "profile:birth_place",
+      "title": "birth_place",
+      "detail": "Delhi"
+    },
+    {
+      "action": "created",
+      "kind": "astrology",
+      "key": "zodiac",
+      "title": "sun_sign",
+      "detail": "Leo"
+    },
+    {
+      "action": "created",
+      "kind": "goal",
+      "key": "goal:career_change",
+      "title": "Career Change",
+      "detail": "Career Change (timeframe: next year, target year: 2027)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "openai",
+  "degraded": false,
+  "warnings": [
+    "new_user"
+  ]
+}
+
+[session-1] USER: What should I focus on for my career?
+{
+  "response": "Rahul, as a Leo your natural strengths are leadership, creativity, and a magnetic presence. When you plan your 2027 career shift, focus on:\n\n1. **Leadership roles** – look for positions where you can guide a team, set a vision, or manage projects. Your confidence makes you a natural captain.\n\n2. **Creative expression** – jobs in marketing, brand strategy, product design, media, or any field that lets you craft compelling stories will keep you energized.\n\n3. **Visibility & personal brand** – build a strong online profile (LinkedIn, portfolio, short videos) that showcases your achievements. Leo thrives when the spotlight is on you.\n\n4. **Networking in “bright” settings** – attend conferences, panels, or workshops where you can speak or present. Your charisma attracts mentors and referrals.\n\n5. **Skill upgrades that spark passion** – consider courses in digital storytelling, UX design, or leadership coaching to deepen the talents you already enjoy.\n\nRemember, astrology offers guidance; for precise career planning or legal/financial decisions, consult a professional career counselor. Good luck with your next move!",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "advice",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "openai",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-1] USER: Why do you say that?
+{
+  "response": "I suggested those focus areas because they line up with the core traits of a Leo — a fire sign ruled by the Sun. Leo energy is naturally confident, loves to be seen, and thrives when creating something that stands out.  \n\n- **Leadership:** Leo’s pride and drive to lead make managerial or team‑lead roles feel natural and rewarding.  \n- **Creative expression:** The sign’s creative spark enjoys work that lets you design, market, or tell stories, keeping you motivated.  \n- **Visibility:** Since the Sun seeks the spotlight, building a strong personal brand lets your confidence translate into professional opportunities.  \n- **Networking in bright settings:** Leo’s charisma works best in lively, public environments (conferences, panels), where you can attract mentors and referrals.  \n- **Skill upgrades that excite you:** Fire signs stay energized when they’re learning something they’re passionate about, preventing burnout during a transition.  \n\nThese suggestions match both your Leo profile and your goal of a job change in 2027. (Astrology offers guidance; for detailed career planning, a professional counselor can help.)",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "followup",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "openai",
+  "degraded": false,
+  "warnings": []
+}
+
+################ New conversation ################
+
+[session-2] USER: What do you remember about my career goals?
+{
+  "response": "I remember you’re planning a career change — you’d like to make the move next year, with 2027 as your target year.",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "previous_session_summary"
+  ],
+  "intent": "recall",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "openai",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: I'm preparing for a product management interview next month.
+{
+  "response": "Hey Rahul! 🌞 As a Leo, you naturally shine when you’re in the spotlight—confidence, creativity, and a bold presence are your gifts. For a product‑management interview next month, lean into those strengths:\n\n1. **Showcase leadership** – frame past projects as “my team’s success,” highlighting how you rallied people toward a vision.  \n2. **Tell a story** – Leos love drama; craft a concise narrative about a product challenge you solved, emphasizing the “aha!” moment.  \n3. **Bring visual flair** – a quick mock‑up or a simple diagram can make your ideas pop and keep the panel engaged.  \n4. **Stay warm, not over‑proud** – balance confidence with genuine curiosity about the company’s needs; ask insightful questions that show you’re already thinking like an insider.  \n\nRemember, astrology offers guidance, not guarantees—if you need formal career coaching, a professional mentor can add extra polish. Good luck; the Sun’s energy is on your side! 🌟",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "created",
+      "kind": "goal",
+      "key": "goal:product_management_interview",
+      "title": "Product Management Interview",
+      "detail": "Product Management Interview (timeframe: next month, target month: 2026-11)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "openai",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: How is my health looking this year?
+{
+  "response": "Rahul, as a Leo (fire sign ruled by the Sun), you naturally have high energy and a vibrant spirit, but the same fire can burn out if you don’t give it proper fuel and ventilation.\n\n**What to watch :**  \n- **Heart & circulation:** Leos benefit from regular cardio—running, swimming, or a brisk walk in daylight—to keep the “solar” energy flowing smoothly.  \n- **Back & spine:** Your confident posture can sometimes turn into tension in the shoulders and lower back. Stretching or yoga a few times a week helps release that built‑up heat.  \n- **Skin & Sun:** You love sunshine, but too much UV can irritate sensitive skin. Use SPF daily, especially in Delhi’s strong summer months.  \n- **Stress:** Your pride can make you push through fatigue. Schedule short “play” breaks (creative hobbies, music) to prevent burnout.\n\n**Practical tip:** Aim for a balanced routine—30 minutes of cardio, 10 minutes of stretch, and a daily moment of mindful breathing. If you notice persistent aches or fatigue, see a health professional. Astrology offers guidance; medical decisions belong to your doctor. 🌞",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "conversation_history"
+  ],
+  "intent": "advice",
+  "life_areas": [
+    "health"
+  ],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "openai",
+  "degraded": false,
+  "warnings": [
+    "no_relevant_memory"
+  ]
+}
+
+[session-2] USER: Actually, I plan to switch jobs in 2028, not next year.
+{
+  "response": "Got it, Rahul—your career‑change timeline is now set for 2028 (target year 2028), not next year. I’ll update that in my notes. Good luck with the product‑management interview, and feel free to let me know if anything else changes!",
+  "context_used": [
+    "user_profile",
+    "astrology_profile",
+    "career_goal",
+    "conversation_history"
+  ],
+  "intent": "share_info",
+  "life_areas": [
+    "career"
+  ],
+  "memory_updates": [
+    {
+      "action": "updated",
+      "kind": "goal",
+      "key": "goal:career_change",
+      "title": "Career Change",
+      "detail": "Career Change (timeframe: next year, target year: 2027) -> Career Change (timeframe: 2028, target year: 2028)"
+    }
+  ],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "openai",
+  "degraded": false,
+  "warnings": []
+}
+
+[session-2] USER: Thanks!
+{
+  "response": "You’re welcome, Rahul! Let me know if you’d like any more interview tips, health pointers, or anything else as you prep for 2028. 🌟",
+  "context_used": [
+    "user_profile",
+    "conversation_history",
+    "conversation_summary"
+  ],
+  "intent": "smalltalk",
+  "life_areas": [],
+  "memory_updates": [],
+  "missing_profile_fields": [
+    "time_of_birth"
+  ],
+  "llm_provider": "openai",
+  "degraded": false,
+  "warnings": []
+}
+
+################ Shared Brain for rahul ################
+{
+  "user": {
+    "updated_at": "2026-10-04T11:06:29+00:00",
+    "user_id": "rahul",
+    "date_of_birth": "1995-08-15",
+    "name": "Rahul",
+    "birth_place": "Delhi",
+    "created_at": "2026-10-04T11:06:26+00:00",
+    "sun_sign": "Leo"
+  },
+  "relationships": [
+    {
+      "type": "HAS_ZODIAC",
+      "target": {
+        "label": "ZodiacSign",
+        "name": "Leo"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "91016e03ea7f4535b38615a0bcd9e91a",
+        "kind": "goal",
+        "key": "goal:career_change",
+        "title": "Career Change",
+        "area": "career",
+        "confidence": 0.85,
+        "importance": 0.9,
+        "status": "superseded",
+        "source_text": "I'm planning to switch jobs next year.",
+        "mention_count": 1,
+        "created_at": "2026-10-04T11:06:29+00:00",
+        "updated_at": "2026-10-04T11:07:51+00:00",
+        "attr_timeframe": "next year",
+        "attr_target_year": 2027
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "cecd1fffbb514ec28adee8afd40665bc",
+        "kind": "goal",
+        "key": "goal:product_management_interview",
+        "title": "Product Management Interview",
+        "area": "career",
+        "confidence": 0.85,
+        "importance": 0.9,
+        "status": "active",
+        "source_text": "I'm preparing for a product management interview next month.",
+        "mention_count": 1,
+        "created_at": "2026-10-04T11:07:23+00:00",
+        "updated_at": "2026-10-04T11:07:23+00:00",
+        "attr_timeframe": "next month",
+        "attr_target_month": "2026-11"
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    },
+    {
+      "type": "HAS_GOAL",
+      "target": {
+        "label": "Goal",
+        "id": "c5312f52832840699481d639728fa7d7",
+        "kind": "goal",
+        "key": "goal:career_change",
+        "title": "Career Change",
+        "area": "career",
+        "confidence": 0.9,
+        "importance": 0.9,
+        "status": "active",
+        "source_text": "Actually, I plan to switch jobs in 2028, not next year.",
+        "mention_count": 2,
+        "created_at": "2026-10-04T11:07:51+00:00",
+        "updated_at": "2026-10-04T11:07:51+00:00",
+        "attr_timeframe": "2028",
+        "attr_target_year": 2028
+      },
+      "about": {
+        "label": "LifeArea",
+        "name": "career"
+      }
+    }
+  ],
+  "supersedes": [
+    {
+      "new_id": "c5312f52832840699481d639728fa7d7",
+      "old_id": "91016e03ea7f4535b38615a0bcd9e91a"
+    }
+  ],
+  "profile_history": [],
+  "sessions": [
+    {
+      "key": null,
+      "summary": "User: What do you remember about my career goals? Naksh: I remember you’re planning a career change — you’d like to make the move next year, with 2027 as your target year. User: I'm preparing for a product management interview next month. Naksh: Hey Rahul! 🌞 As a Leo, you naturally shine when you’re in the spotlight—confidence, creativity, and a bold presence are your gifts. For a... How is my health looking this year? | Actually, I plan to switch jobs in 2028, not next year. | Thanks!",
+      "user_id": "rahul",
+      "session_id": "session-2",
+      "started_at": "2026-10-04T11:07:09+00:00",
+      "last_active": "2026-10-04T11:08:04+00:00",
+      "turns": 10
+    },
+    {
+      "key": null,
+      "summary": "My name is Rahul. I was born on 15 August 1995 in Delhi. I'm planning to switch jobs next year. | What should I focus on for my career? | Why do you say that?",
+      "user_id": "rahul",
+      "session_id": "session-1",
+      "started_at": "2026-10-04T11:06:29+00:00",
+      "last_active": "2026-10-04T11:06:56+00:00",
+      "turns": 6
+    }
+  ]
+}

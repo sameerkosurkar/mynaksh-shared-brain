@@ -21,8 +21,17 @@ def _post(url: str, *, headers: dict, payload: dict, timeout: float) -> dict:
         raise LLMError(f"transport error: {exc}") from exc
     if resp.status_code >= 400:
         retryable = resp.status_code == 429 or resp.status_code >= 500
-        raise LLMError(f"HTTP {resp.status_code}: {resp.text[:300]}", retryable=retryable)
+        raise LLMError(f"HTTP {resp.status_code}: {resp.text[:300]}", retryable=retryable,
+                       retry_after=_retry_after(resp))
     return resp.json()
+
+
+def _retry_after(resp: httpx.Response) -> float | None:
+    """Seconds to wait from the Retry-After header (rate limits); None if absent or not numeric."""
+    try:
+        return float(resp.headers["retry-after"])
+    except (KeyError, ValueError):
+        return None
 
 
 class OpenAIProvider(LLMProvider):

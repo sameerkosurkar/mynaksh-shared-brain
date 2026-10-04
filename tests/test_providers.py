@@ -63,3 +63,27 @@ def test_missing_key_falls_back_to_mock():
     assert [p.name for p in llm.providers] == ["mock"]
     llm = build_llm(Settings(_env_file=None, llm_provider="openai", openai_api_key="k"))
     assert [p.name for p in llm.providers] == ["openai", "mock"] and llm.is_real
+
+
+def test_rate_limit_retry_after_is_parsed_and_honoured(monkeypatch):
+    def limited(url, headers=None, json=None, timeout=None):
+        return httpx.Response(429, json={"error": "rate"}, headers={"retry-after": "4.5"},
+                              request=httpx.Request("POST", url))
+    monkeypatch.setattr(providers.httpx, "post", limited)
+    with pytest.raises(LLMError) as err:
+        providers.OpenAIProvider("k", "m", "https://x/v1", 5).generate(REQ)
+    assert err.value.retry_after == 4.5
+
+    from app.llm import fallback
+    from app.llm.mock import MockProvider
+    waits = []
+    monkeypatch.setattr(fallback.time, "sleep", waits.append)
+    llm = fallback.FallbackLLM([providers.OpenAIProvider("k", "m", "https://x/v1", 5), MockProvider()],
+                               max_retries=1, max_wait=3.0)
+    assert llm.generate(REQ).degraded is True
+    assert waits == [3.0]                     # provider asked for 4.5s, capped at max_wait
+
+
+def test_prompt_forbids_invented_transits():
+    from app.chat.prompt_builder import SYSTEM_PROMPT
+    assert "Never" in SYSTEM_PROMPT and "transits" in SYSTEM_PROMPT
